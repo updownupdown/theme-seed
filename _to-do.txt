@@ -1,0 +1,9 @@
+[ ]  test actual git workflow
+
+==========================
+NOT URGENT
+
+[ ]  debug sticky nav jumping on hover
+[ ]  better way to serve scaled images and backgrounds
+[ ]  on WebSavers, remove iThemes Security, and replace with direct tweaks to theme instead
+   - /wordpress/ login URL? ask host support if useful.
