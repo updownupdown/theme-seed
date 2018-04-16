@@ -69,6 +69,13 @@
 	}
 
 
+	// Background Blur
+	&.fbg-blur .flexible-bg{
+		filter:blur(3px);
+		transform:scale(1.1);
+	}
+
+
 	// Overlay
 	.flexible-overlay{
 		position:absolute;z-index:2;
@@ -89,6 +96,16 @@
 		.flexible-bg,
 		.flexible-overlay{display:none}
 	}
+}
+
+
+// Flexible within a Column (e.g. left side in a blog post)
+.flexible-column{
+	.flexible{overflow:visible;padding:0 0 30px;background:none}
+	.flexible.flexible-full-img{padding-bottom:50px}
+	.flexible .flexible-bg,
+	.flexible-overlay{display:none}
+	.col.span-12{padding-left:0;padding-right:0}
 }
 
 
@@ -123,11 +140,11 @@
 			&.fcc-col-33{
 				display:block;
 				width:100%;max-width:768px;
-				margin:0 auto;
+				margin:0 auto 20px;
 			}
 			&.fcc-col-25{
 				width:48%;
-				margin:0 4% 0 0;
+				margin:0 4% 20px 0;
 			}
 			&.last,
 			&.halfway{margin-right:0;margin-bottom:0}
@@ -159,7 +176,11 @@
 // ========== Full Width Image ========== //
 
 .flexible-full-img{
+	overflow:hidden;
+
+	// Image
 	.full-img-img{
+		position:relative;z-index:1;
 		float:left;
 		width:100%;height:auto;
 		margin:0;
@@ -171,6 +192,27 @@
 		@include below(1024){
 			&.desktop{display:none}
 			&.mobile{display:block}
+		}
+	}
+
+	// Caption
+	.fi-caption{
+		position:absolute;z-index:2;
+		bottom:0;left:0;
+		width:100%;
+		margin:0;
+		padding:50px 18px 18px;
+
+		background:rgba(0,0,0,.7);
+		background:linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,.8) 100%);
+
+		font-size:14px;color:rgba(255,255,255,.7);font-weight:300;
+		text-align:right;
+
+		a{
+			font-weight:300;color:rgba(255,255,255,.7);
+
+			&:hover{color:$white}
 		}
 	}
 }
@@ -444,10 +486,11 @@ $gallery-bg: $white;
 
 
 // ========== Tabs ========== //
-.flexible-tabs .intro-content{float:left;width:100%;padding-bottom:25px}
+.flexible-tabs .intro-content{float:left;width:100%;padding-bottom:20px}
 
 .flexible-tab{
 	display:none;
+	float:left;width:100%;
 
 	&.ui-tabs{
 		display:block;
@@ -459,10 +502,11 @@ $gallery-bg: $white;
 
 
 // ========== Accordions ========== //
-.flexible-accordions .intro-content{float:left;width:100%;padding-bottom:25px}
+.flexible-accordions .intro-content{float:left;width:100%;padding-bottom:20px}
 
 .flexible-accordion{
 	display:none;
+	float:left;width:100%;
 
 	&.ui-accordion{
 		display:block;

@@ -6,8 +6,8 @@ wp_enqueue_script('theme-jquery-ui');
 openFlexible('accordions');
 
   // Intro Content
-  if( get_sub_field('include_intro') ){
-    echo '<div class="intro-content">' . apply_filters('the_content', get_sub_field('intro_content')) . '</div>';
+  if( get_sub_field('use_ic') ){
+    echo '<div class="intro-content">' . get_sub_field('intro_content') . '</div>';
   }
 
   // Open first by default?
@@ -19,8 +19,8 @@ openFlexible('accordions');
 
           while( have_rows('accordions') ): the_row();
 
-              echo '<h2>' . get_sub_field('heading') . '</h2>';
-              echo '<div>' . apply_filters('the_content', get_sub_field('content')) . '</div>';
+              echo '<h3>' . get_sub_field('heading') . '</h3>';
+              echo '<div>' . get_sub_field('content') . '</div>';
 
           endwhile;
 

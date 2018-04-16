@@ -3,11 +3,10 @@
 // ============ TINY MCE ============ //
 // ================================== //
 
-
 // Edit second row button
-function custom_mce_buttons_2($buttons){	
+function custom_mce_buttons_2($buttons){
 
-	// Add buttons	
+	// Add buttons
 	$buttons[] = 'superscript';
 	$buttons[] = 'subscript';
 	$buttons[] = 'styleselect';
@@ -19,7 +18,6 @@ function custom_mce_buttons_2($buttons){
 	return $buttons;
 }
 add_filter('mce_buttons_2', 'custom_mce_buttons_2');
-
 
 
 // Add Formats button custom content
@@ -35,14 +33,14 @@ function custom_tinymce_settings($settings){
 					'title'		=> 'Blue',
 					'selector'	=> 'h1,h2,h3,h4,h5,h6,p,li',
 					'classes'	=> 'blue',
-				),			
+				),
 				array(
 					'title'		=> 'Red',
 					'selector'	=> 'h1,h2,h3,h4,h5,h6,p,li',
 					'classes'	=> 'red',
 				),
 			),
-		),	
+		),
 		*/
 
 		// Size
@@ -107,7 +105,7 @@ function custom_tinymce_settings($settings){
 					'title'		=> 'More Bottom Spacing',
 					'selector'	=> 'h1,h2,h3,h4,h5,h6,p',
 					'classes'	=> 'more-bottom-spacing',
-				),				
+				),
 				array(
 					'title'		=> 'Less Bottom Spacing',
 					'selector'	=> 'h1,h2,h3,h4,h5,h6,p',
@@ -124,7 +122,7 @@ function custom_tinymce_settings($settings){
 		// Images
 		array(
 			'title'	=> 'Images',
-			'items'	=> array(				
+			'items'	=> array(
 				array(
 					'title'		=> 'Image Shadow',
 					'selector'	=> 'img',
@@ -161,7 +159,7 @@ function custom_tinymce_settings($settings){
 				),
 			),
 		),
-	);	
+	);
 
 	$settings['style_formats_merge'] = false;
 	$settings['style_formats'] = json_encode($new_styles);

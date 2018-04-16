@@ -1,5 +1,3 @@
-console.time("Loading plugins"); //start measuring
-
 // Required
 var gulp          = require('gulp'),
     autoprefixer  = require('gulp-autoprefixer'),
@@ -41,6 +39,8 @@ gulp.task('sass-lint', function(){
         'no-duplicate-properties': 0,
         'no-qualifying-elements': 0,
         'no-ids': 0,
+        'no-url-domains': 0,
+        'no-url-protocols': 0,
         'no-mergeable-selectors': 0,
         'placeholder-in-extend': 0,
         'empty-line-between-blocks': 0,
@@ -53,6 +53,8 @@ gulp.task('sass-lint', function(){
         'url-quotes': 0,
         'no-vendor-prefixes': 0,
         'mixins-before-declarations': 0,
+        'No empty blocks allowed': 0,
+        'no-empty-rulesets': 0,
         'hex-length': 0,
         'no-css-comments': 0,
         'no-important': 0,
@@ -67,7 +69,7 @@ gulp.task('sass-lint', function(){
 
 // Sass - uglify + sourcemap + livereload
 gulp.task('sass-uglify', function(){
-  return gulp.src(['sass/styles.scss', 'sass/editor.scss', 'sass/local.scss'])
+  return gulp.src(['sass/styles.scss', 'sass/editor.scss'])
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer("last 5 versions", "> 5%", "ie 11", "ie 10", "android", "Edge", "Safari", "iOS"))

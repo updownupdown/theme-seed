@@ -9,9 +9,6 @@ openFlexible('blockquote');
 
     echo '<blockquote>';
 
-        // Icon
-        e_svgi('quotes-open');
-
         // Quote
         echo '<p>' . $quote . '</p>';
 

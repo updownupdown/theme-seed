@@ -3,21 +3,35 @@
 // ========= CORE FUNCTIONS ========= //
 // ================================== //
 
-
-// SVG Icons
-function svgi($icon){
-  return '<svg class="svgi svgi-' . $icon . '"><use xlink:href="' . get_bloginfo('template_url') . '/svg/icons.svg#' . $icon . '"></use></svg>';
+// Prevent empty password error in Chrome
+add_action("login_form", "kill_wp_attempt_focus_start");
+function kill_wp_attempt_focus_start() {
+  ob_start("kill_wp_attempt_focus_replace");
+}
+function kill_wp_attempt_focus_replace($html) {
+  return preg_replace("/d.value = '';/", "", $html);
+}
+add_action("login_footer", "kill_wp_attempt_focus_end");
+function kill_wp_attempt_focus_end() {
+  ob_end_flush();
 }
 
-function e_svgi($icon){
-  echo svgi($icon);
+
+
+// SVG Icons
+function svgi($icon, $classes = ''){
+  return '<svg class="svgi svgi-' . $icon . ( $classes ? ' ' . $classes : '' ) . '"><use xlink:href="' . get_bloginfo('template_url') . '/svg/icons.svg#' . $icon . '"></use></svg>';
+}
+
+function e_svgi($icon, $classes = ''){
+  echo svgi($icon, $classes);
 }
 
 
 
 // Clean up phone numbers for links
 function cleanPhoneNum($phone){
-  $phone = preg_replace('/[-|(|)| |+]/', '', $phone);
+  $phone = preg_replace('/[-|(|)|.| |+]/', '', $phone);
   $phone = str_replace('ext.', ',', $phone);
   $phone = str_replace('ext', ',', $phone);
 
@@ -26,51 +40,62 @@ function cleanPhoneNum($phone){
 
 
 
+// Tiny MCE - Formats Menu CSS Fix
+add_action('admin_head', 'admin_custom_css');
+function admin_custom_css(){
+  echo '<style>
+    .mce-menu-item.mce-menu-item-preview .mce-text{
+      font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+      font-size:15px !important;
+    }
+  </style>';
+}
+
+
 // Yoast SEO - Add title tag support (needed!)
 add_theme_support('title-tag');
-
 
 // Yoast SEO - Keep Yoast metabox at the bottom when editing pages
 function yoasttobottom(){return 'low';}
 add_filter( 'wpseo_metabox_prio', 'yoasttobottom');
 
 
+
 // WP Super Cache - Add "Delete Cache" button in toolbar
 function only_show_option_if_wp_super_cache_is_active() {
-    if (is_plugin_active('wp-super-cache/wp-cache.php')) {
-        function clear_all_cached_files_wpsupercache() {
-            global $wp_admin_bar;
-            if (!is_super_admin() || !is_admin_bar_showing())
-                return;
+  if (is_plugin_active('wp-super-cache/wp-cache.php')) {
+
+    function clear_all_cached_files_wpsupercache() {
+      global $wp_admin_bar;
+
+      if (!is_super_admin() || !is_admin_bar_showing())
+        return;
+
       $args = array(
         'id' => 'delete-cache-completly',
         'title' => 'Clear Cache',
         'href' => wp_nonce_url(admin_url('options-general.php?page=wpsupercache&wp_delete_cache=1&tab=contents'), 'wp-cache'),
         'parent' => '',
         'meta' => array(
-            'title' => 'Clear all cached files of WP Super Cache'
-         )
+        'title' => 'Clear all cached files of WP Super Cache'
+        )
       );
-            $wp_admin_bar->add_menu($args);
-        }
-        add_action('wp_before_admin_bar_render', 'clear_all_cached_files_wpsupercache', 999);
+
+      $wp_admin_bar->add_menu($args);
     }
+
+    add_action('wp_before_admin_bar_render', 'clear_all_cached_files_wpsupercache', 999);
+
+  }
 }
 add_action('admin_init', 'only_show_option_if_wp_super_cache_is_active');
 
 
-// Add menus capability
-function register_my_menus(){register_nav_menus(array('my-menu'=>'Main Menu'));}
-add_action( 'init', 'register_my_menus' );
-
-
-// Add thumbnail support for posts
-add_theme_support( 'post-thumbnails', array( 'post' ) );
-
-
 // Add Editor Style
-add_editor_style( get_stylesheet_directory_uri() . '/build/css/styles.min.css' );
-add_editor_style( get_stylesheet_directory_uri() . '/build/css/editor.min.css' );
+add_editor_style(array(
+  get_stylesheet_directory_uri() . '/build/css/styles.min.css',
+  get_stylesheet_directory_uri() . '/build/css/editor.min.css',
+));
 
 
 // Remove emoji code from header
@@ -79,7 +104,7 @@ remove_action( 'wp_print_styles', 'print_emoji_styles' );
 
 
 // Disable automatic updates email notification
-apply_filters( 'auto_core_update_send_email', '__return_false');
+apply_filters('auto_core_update_send_email', '__return_false');
 
 
 // Set default admin theme for new users

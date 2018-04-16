@@ -23,27 +23,6 @@
 			the_content();
 			?>
 
-			<?php
-			// Prev & Next Posts
-			echo '<ul id="prevnext">';
-
-				$prev_post = get_adjacent_post(false, '', true);
-				if(!empty($prev_post)) {
-					echo '<li><a href="' . get_permalink($prev_post->ID) . '" title="' . $prev_post->post_title . '">' . svgi('arrow-left') . '<small>Previous:</small><br />' . $prev_post->post_title . '</a></li>';
-				} else {
-					echo '<li class="empty"></li>';
-				}
-
-				$next_post = get_adjacent_post(false, '', false);
-				if(!empty($next_post)) {
-					echo '<li><a href="' . get_permalink($next_post->ID) . '" title="' . $next_post->post_title . '">' . svgi('arrow-right') . '<small>Next:</small><br />' . $next_post->post_title . '</a></li>';
-				} else {
-					echo '<li class="empty"></li>';
-				}
-
-			echo '</ul>';
-			?>
-
 			<?php endwhile; else: ?>
 
 				<p>Sorry, no posts matched your criteria.</p>

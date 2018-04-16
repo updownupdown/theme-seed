@@ -190,7 +190,7 @@ $main-menu-side-padding: 16px;
 			&:nth-child(4){top:16px}
 		}
 
-		.mobile-nav-active div span{
+		.mobile-nav-active & span{
 			&:nth-child(1){top:8px;width:0%;left:50%}
 			&:nth-child(2){transform:rotate(45deg)}
 			&:nth-child(3){transform:rotate(-45deg)}
@@ -223,15 +223,19 @@ $main-menu-side-padding: 16px;
 
 // ===== Mobile Nav - Close ===== //
 #mobile-nav-close{
+	@include no-transition;
 	position:absolute;z-index:3;
-	top:0;left:0;
-	width:100%;height:50px;
+	top:0;right:-9999px;
+	width:360px;max-width:100%;
+	height:50px;
 	padding:0 15px;
 
 	background:#fafafa;
 
 	@extend .caps;
 	font-size:13px;font-weight:400;color:#aaa;line-height:50px;
+
+	.mobile-nav-active &{right:0}
 }
 
 
@@ -391,8 +395,6 @@ $main-menu-side-padding: 16px;
 		float:left;width:100%;
 		margin:0;padding:0;
 
-		//background:$white;
-
 		li{
 			list-style-type:none;
 			position:relative;
@@ -407,6 +409,9 @@ $main-menu-side-padding: 16px;
 
 				&:hover{color:#000;background:rgba(0,0,0,.05);text-decoration:none}
 			}
+
+			&.current-page-ancestor > a,
+			&.current-menu-item > a{color:$link-color-hover}
 		}
 
 		.sub-menu{

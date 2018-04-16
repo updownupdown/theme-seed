@@ -48,11 +48,6 @@ function defaultPanelClasses(){
 	$bottom_spacing = get_sub_field('bottom_spacing');
 	if($bottom_spacing) $panel_classes[] = 'fbs-' . $bottom_spacing;
 
-	// Invert Text Colours (invert_colours)
-	$white_text = get_sub_field('white_text');
-	global $flexible_width;
-	if( $flexible_width != 'column' && $white_text ) $panel_classes[] = 'white-text';
-
 	// Background Type
 	$bg_type = get_sub_field('bg_type');
 	if($bg_type){
@@ -61,7 +56,20 @@ function defaultPanelClasses(){
 		if($bg_type == 'colour'){
 			$bg_colour = get_sub_field('bg_colour');
 			$panel_classes[] = 'fbg-color-' . $bg_colour;
+
+			// Auto white text for colour
+			if($bg_colour != 'white' && $bg_colour != 'palegrey'){
+				$panel_classes[] = 'white-text';
+			}
+		} else {
+			// Auto white text for bg images
+			$panel_classes[] = 'white-text';
 		}
+	}
+
+	// Background Blur
+	if( get_sub_field('bg_blur') ){
+		$panel_classes[] = 'fbg-blur';
 	}
 
 	return $panel_classes;

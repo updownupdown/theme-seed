@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html <?php language_attributes(); ?> prefix="og: http://ogp.me/ns#">
 
 <head>
-	<meta charset="utf-8" />
+	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 
 	<link rel="apple-touch-icon" sizes="57x57" href="<?php bloginfo('url'); ?>/apple-touch-icon-57x57.png" />
 	<link rel="apple-touch-icon" sizes="114x114" href="<?php bloginfo('url'); ?>/apple-touch-icon-114x114.png" />
@@ -26,12 +26,6 @@
 	<link rel="alternate" type="application/atom+xml" title="<?php bloginfo('name'); ?> Atom Feed" href="<?php bloginfo('atom_url'); ?>" />
 	<!-- <link rel="pingback" href="< ?php bloginfo('pingback_url'); ?>" /> -->
 
-	<!--[if lt IE 9]>
-		<script src="<?php bloginfo('template_url'); ?>/js/html5shiv.min.js"></script>
-	<![endif]-->
-
-	<?php wp_head(); ?>
-
 	<?php
 	// Header Scripts
 	$scripts_status = get_field('scripts_status', 'options');
@@ -40,9 +34,18 @@
 	}
 	?>
 
+	<?php wp_head(); ?>
+
 </head>
 
 <body <?php body_class(); ?>>
+
+<?php
+// Body Scripts
+if( $scripts_status == 'live' ){
+	echo get_field('body_scripts', 'options');
+}
+?>
 
 	<header id="nav">
 		<div class="row">

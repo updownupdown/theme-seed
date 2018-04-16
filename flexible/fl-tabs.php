@@ -6,8 +6,8 @@ wp_enqueue_script('theme-jquery-ui');
 openFlexible('tabs');
 
     // Intro Content
-    if( get_sub_field('include_intro') ){
-      echo '<div class="intro-content">' . apply_filters('the_content', get_sub_field('intro_content')) . '</div>';
+    if( get_sub_field('use_ic') ){
+      echo '<div class="intro-content">' . get_sub_field('intro_content') . '</div>';
     }
 
     // Prepare Content
@@ -28,7 +28,7 @@ openFlexible('tabs');
                 $tabs_headings .= '<li><a href="#tab-' . $heading_clean . '">' . $heading . '</a></li>';
 
                 // Prepare Contents
-                $tabs_contents .= '<div id="tab-' . $heading_clean . '">' . apply_filters('the_content', get_sub_field('content')) . '</div>';
+                $tabs_contents .= '<div id="tab-' . $heading_clean . '">' . get_sub_field('content') . '</div>';
 
             endwhile;
 

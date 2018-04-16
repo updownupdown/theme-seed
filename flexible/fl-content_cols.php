@@ -29,7 +29,7 @@ openFlexible('content-cols', $panel_classes);
 
             // One Column
             if( $center_lim ) echo '<div class="center-lim">';
-                echo apply_filters('the_content', get_sub_field('content_1'));
+                echo get_sub_field('content_1');
             if( $center_lim ) echo '</div>';
 
             break;
@@ -65,27 +65,27 @@ openFlexible('content-cols', $panel_classes);
             }
 
 
-        echo '<div class="fcc-col fcc-col-' . $col1_class . '">' . apply_filters('the_content', get_sub_field('content_1')) . '</div>';
-            echo '<div class="fcc-col fcc-col-' . $col2_class . ' last">' . apply_filters('the_content', get_sub_field('content_2')) . '</div>';
+        echo '<div class="fcc-col fcc-col-' . $col1_class . '">' . get_sub_field('content_1') . '</div>';
+            echo '<div class="fcc-col fcc-col-' . $col2_class . ' last">' . get_sub_field('content_2') . '</div>';
 
             break;
 
         case '3':
 
             // Three Columns
-            echo '<div class="fcc-col fcc-col-33">' . apply_filters('the_content', get_sub_field('content_1')) . '</div>';
-            echo '<div class="fcc-col fcc-col-33">' . apply_filters('the_content', get_sub_field('content_2')) . '</div>';
-            echo '<div class="fcc-col fcc-col-33 last">' . apply_filters('the_content', get_sub_field('content_3')) . '</div>';
+            echo '<div class="fcc-col fcc-col-33">' . get_sub_field('content_1') . '</div>';
+            echo '<div class="fcc-col fcc-col-33">' . get_sub_field('content_2') . '</div>';
+            echo '<div class="fcc-col fcc-col-33 last">' . get_sub_field('content_3') . '</div>';
 
             break;
 
         case '4':
 
             // Four Columns
-            echo '<div class="fcc-col fcc-col-25">' . apply_filters('the_content', get_sub_field('content_1')) . '</div>';
-            echo '<div class="fcc-col fcc-col-25 halfway">' . apply_filters('the_content', get_sub_field('content_2')) . '</div>';
-            echo '<div class="fcc-col fcc-col-25">' . apply_filters('the_content', get_sub_field('content_3')) . '</div>';
-            echo '<div class="fcc-col fcc-col-25 last">' . apply_filters('the_content', get_sub_field('content_4')) . '</div>';
+            echo '<div class="fcc-col fcc-col-25">' . get_sub_field('content_1') . '</div>';
+            echo '<div class="fcc-col fcc-col-25 halfway">' . get_sub_field('content_2') . '</div>';
+            echo '<div class="fcc-col fcc-col-25">' . get_sub_field('content_3') . '</div>';
+            echo '<div class="fcc-col fcc-col-25 last">' . get_sub_field('content_4') . '</div>';
 
             break;
 

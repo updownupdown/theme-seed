@@ -24,7 +24,7 @@
 // ========== RESET CSS ========== //
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
-body{line-height:1}
+body:not(.mce-content-body){line-height:1}
 ol,ul{list-style:none}
 blockquote,q{quotes:none}
 blockquote::before,blockquote::after,q::before,q::after{content:'';content:none}
@@ -36,7 +36,6 @@ table{border-collapse:collapse;border-spacing:0}
 html{width:100%;height:100%}
 body{
 	width:100%;height:100%;overflow-x:hidden;
-	font-smoothing:antialiased;text-size-adjust:100%;
 }
 
 
@@ -45,14 +44,28 @@ body{
 	fill: currentColor;
 }
 
+@function encodecolor($string) {
+	@if type-of($string) == 'color' {
+        $hex: str-slice(ie-hex-str($string), 4);
+        $string:unquote("#{$hex}");
+    }
+    $string: '%23' + $string;
+	@return $string;
+}
+
 @function build-icon($icon) {
-  $icon: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">#{$icon}</svg>';
+  $icon: "%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='20' height='20'%3E#{$icon}%3C/svg%3E";
   @return $icon;
 }
 
 @function icon($icon-name, $color){
+
+	$color: encodecolor($color);
+
   $icons: (
-    arrow-down: '<path fill="#{$color}" d="M2.49,4.38A1.5,1.5,0,0,0,.38,6.5l9.56,9.56L19.5,6.5a1.5,1.5,0,0,0-2.12-2.12L9.94,11.83Z"/>'
+    arrow-down: "%3Cpath fill='#{$color}' d='M2.49,4.38A1.5,1.5,0,0,0,.38,6.5l9.56,9.56L19.5,6.5a1.5,1.5,0,0,0-2.12-2.12L9.94,11.83Z'/%3E",
+		quote: "%3Cpath fill='#{$color}' d='M0,18.25V11.39c0-4,.87-7.32,4.9-9A14.9,14.9,0,0,1,8.37,1.5V5.57c-2.2.69-2.79,1.83-2.84,4.07H8.37v8.6Zm11.67,0V11.39c0-4.07.87-7.28,4.9-9A15.11,15.11,0,0,1,20,1.5V5.57c-2.2.69-2.79,1.83-2.84,4.07H20v8.6Z'/%3E",
+    checkmark: "%3Cpolygon fill='#{$color}' points='20 4 7 18 0 9 2.56 6.81 7 11.44 18 2 20 4'/%3E"
   );
 
   $icon: build-icon(map-get($icons, $icon-name));
@@ -80,9 +93,9 @@ ul,ol{
 	margin:0 0 20px;
 	padding:0 0 0 30px;
 }
-ul li{list-style-type:disc}
-ol li{list-style-type:decimal}
-ul ul,ul ol,ol ol,ol ul{padding:5px 0 5px 45px}
+ul > li{list-style-type:disc}
+ol > li{list-style-type:decimal}
+ul > li > ul, ul > li > ol, ol > li > ol, ol > li > ul{margin-bottom:0;padding:5px 0 5px 30px}
 
 @mixin no-list{
 	margin:0;
@@ -100,28 +113,41 @@ sub, sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
 sup{top:-.5em}
 sub{bottom:-.25em}
 
+
 // Blockquote
 blockquote{
 	position:relative;z-index:2;
 	margin:30px 0;
-	padding:85px 30px 35px;
 
 	background:rgba(0,0,0,.02);
 
-	&,p{
-		font-size:18px;line-height:1.5;font-weight:300;
+	@include above(1024){padding:35px 30px 35px 120px}
+	@include below(1024){padding:35px 30px;text-align:center}
+
+
+	// Quote icon
+	&::before{
+		@include svg-icon(quote, #ddd, 50px);
+
+
+		@include above(1024){
+			position:absolute;
+			top:50%;left:30px;
+			margin-top:-25px;
+		}
+		@include below(1024){
+			display:block;
+			margin:0 auto 25px;
+		}
 	}
 
+
+	// Paragraph, content
+	&,p{font-size:18px;line-height:1.5;font-weight:300}
 	p{margin-bottom:0}
 
-	.svgi-quotes-open{
-		position:absolute;z-index:1;
-		top:25px;left:30px;
-		width:42px;height:42px;
 
-		color:rgba(0,0,0,.08);
-	}
-
+	// Citation
 	.cite,
 	cite{
 		position:relative;
@@ -131,25 +157,7 @@ blockquote{
 		font-size:15px;line-height:1.4;
 
 		.author{font-size:18px;font-weight:700}
-		.role{font-size:15px;font-style:italic;color:#aaa}
-	}
-
-	@include below(768){
-		padding:90px 25px 25px;
-		text-align:center;
-		border-left:0;
-
-		&::before{
-			top:20px;left:50%;
-			margin-top:0;
-			margin-left:-25px;
-		}
-
-		.cite::before,
-		cite::before{
-			left:50%;
-			margin-left:-25px;
-		}
+		.role{font-size:15px;font-weight:300}
 	}
 }
 
@@ -234,6 +242,8 @@ img.border,
 		border:0 none;
 	}
 }
+
+img.shadow{box-shadow:1px 2px 8px rgba(0,0,0,.08)}
 
 .gallery .wp-caption-text,
 .wp-caption p.wp-caption-text{
@@ -562,15 +572,21 @@ $accordions-border: $tabs-border;
 
 
 // ===== WP Admin Bar Fixes ===== //
-.admin-bar{
+body.admin-bar{
 
-	#nav{top:32px}
+	@media only screen and (min-width: 1024px){
+		#nav{top:32px}
 
-	#sticky-top.sticky-show{top:32px}
-	#sticky-slideout{top:96px}
+		#sticky-top.sticky-show{top:32px}
+		#sticky-slideout{top:96px}
+	}
 
+	@media only screen and (max-width: 1023px){
+		#wpadminbar{display:none}
+		&:not(.mce-content-body){margin-top:-32px}
+	}
 	@media only screen and (max-width: 782px){
-		#sticky-top.sticky-show{top:46px}
+		&:not(.mce-content-body){margin-top:-46px}
 	}
 
 	// Remove extra items from WP Admin Bar

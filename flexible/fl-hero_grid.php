@@ -49,10 +49,10 @@ openFlexible('herogrid', null, true);
                     $video_ogg = $box['video_ogg'];
 
                     // Still image for mobile
-                    echo '<div class="fhg-box-bg fhg-box-video-still" style="background-image:url(\'' . $video_still['sizes']['large'] . '\')"></div>';
+                    echo '<div class="fhg-box-bg fhg-box-video-still" ' . ( $video_still ? ' style="background-image:url(\'' . $video_still['sizes']['large'] . '\')"' : '' ) . '></div>';
 
                     // Video
-                    echo '<div class="fhg-box-video"><video preload autoplay muted loop poster="' . $video_still['sizes']['large'] . '">';
+                    echo '<div class="fhg-box-video"><video preload autoplay muted loop ' . ( $video_still ? 'poster="' . $video_still['sizes']['large'] : '' ) . '">';
 
                         if( $video_mp4 ) echo '<source src="' . $video_mp4 . '" type="video/mp4">';
                         if( $video_webm ) echo '<source src="' . $video_webm . '" type="video/webm">';
@@ -72,7 +72,7 @@ openFlexible('herogrid', null, true);
 
 
             // Content
-            echo '<div class="fhg-box-content">' . apply_filters('the_content', $box['content']) . '</div>';
+            echo '<div class="fhg-box-content">' . $box['content'] . '</div>';
 
         echo '</div>';
 

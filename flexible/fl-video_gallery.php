@@ -38,7 +38,7 @@ openFlexible('videos');
                         if( $video_title ) echo '<h3 class="video-title">' . $video_title . '</h3>';
 
                         // YouTube Embed
-                        echo '<div class="video-iframe-wrap"><iframe class="video-iframe" width="' . $width . '" height="' . $height . '" src="//www.youtube.com/embed/' . get_sub_field('youtube_id') . '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>';
+                        echo '<div class="video-iframe-wrap"><iframe class="video-iframe" width="' . $width . '" height="' . $height . '" src="//www.youtube.com/embed/' . get_sub_field('youtube_id') . '?rel=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>';
 
                     echo '</div></li>';
 

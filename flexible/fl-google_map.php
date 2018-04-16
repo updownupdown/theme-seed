@@ -2,13 +2,9 @@
 // Enqueue Scripts
 wp_enqueue_script('acf-maps');
 
-// Fields
-$map_height = get_sub_field('map_height');
-$map_width = get_sub_field('map_width');
-    $bypass_row = $map_width == 'full' ? true : false;
-
 // Map Options
-$map_options = array('scrollwheel', 'maptype', 'draggable', 'streetview', 'zoomcontrol');
+$map_height = get_sub_field('map_height');
+$map_options = array('draggable', 'zoomcontrol');
 $map_options_data = '';
 foreach( $map_options as $option ){
     $option_value = get_sub_field($option);
@@ -25,7 +21,7 @@ if( ! $zoom ) $zoom = 15;
 $map_options_data .= ' data-zoom="' . $zoom . '"';
 
 // Open Panel
-openFlexible('map', null, $bypass_row);
+openFlexible('map', null, true);
 
     // ACF Map
     echo '<div class="acf-map height-' . $map_height . '"' . $map_options_data . '>';
@@ -69,5 +65,5 @@ openFlexible('map', null, $bypass_row);
 
 
 // Close Panel
-closeFlexible($bypass_row);
+closeFlexible(true);
 ?>
