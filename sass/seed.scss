@@ -3,6 +3,7 @@
 	background-image:url('../../images/' + $img);
 }
 
+
 @mixin bg-cover{
 	background-position:center center;
 	background-repeat:no-repeat;
@@ -208,11 +209,10 @@ a{transition:.3s ease}
 // ========== CORE WORDPRESS CLASSES ========== //
 
 // Image alignment
-.alignnone{margin:0 0 30px 0}
-p + .alignnone{margin-top:20px}
-.alignright{float:right;margin:20px 0 30px 30px}
-.alignleft{float:left;margin:20px 30px 30px 0}
-.aligncenter{display:block;margin:20px auto 30px}
+.alignnone{display:block;margin:0 0 20px}
+.alignright{float:right;margin:0 0 20px 20px}
+.alignleft{float:left;margin:0 20px 20px 0}
+.aligncenter{display:block;margin:0 auto 20px}
 	@include below(1200){
 		.col .alignleft,
 		.col .alignright{max-width:60%}
